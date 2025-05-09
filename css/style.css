@@ -255,3 +255,49 @@ button:hover {
 .fc-button-active {
   background-color: #2980b9 !important;
 }
+
+/* Amélioration des événements du calendrier */
+.fc-event {
+  overflow: hidden;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 4px !important;
+  min-height: 45px;
+  border-width: 2px !important;
+}
+
+.fc-event:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Style pour les réservations de l'utilisateur courant */
+.fc-event.current-user-event {
+  border-left: 4px solid #3498db !important;
+  background-color: rgba(52, 152, 219, 0.15) !important;
+}
+
+/* Style pour les réservations des autres utilisateurs */
+.fc-event.other-user-event {
+  border-left: 4px solid #e74c3c !important;
+  background-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+.fc-event-header {
+  margin-bottom: 3px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 2px;
+}
+
+.fc-event-description {
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Couleurs plus visibles pour les textes */
+.fc-event-time,
+.fc-event-title {
+  color: #333 !important;
+  font-weight: normal;
+}

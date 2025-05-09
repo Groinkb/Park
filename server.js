@@ -118,13 +118,18 @@ function authenticateToken(req, res, next) {
   });
 }
 
+
 // Routes API pour les réservations
 app.get('/api/reservations', authenticateToken, (req, res) => {
-  db.all('SELECT * FROM reservations ORDER BY start_time', (err, rows) => {
+  db.all(`
+    SELECT r.id, r.user_id, r.start_time, r.end_time, r.note, u.name as user_name 
+    FROM reservations r
+    JOIN users u ON r.user_id = u.id
+    ORDER BY r.start_time
+  `, (err, rows) => {
     if (err) {
       return res.status(500).json({ error: 'Erreur lors de la récupération des réservations' });
     }
-
     res.json(rows);
   });
 });

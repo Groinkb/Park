@@ -90,8 +90,11 @@ class CalendarManager {
             description: reservation.note || '',
             backgroundColor: isCurrentUserReservation ? '#3498db' : '#e74c3c',
             borderColor: isCurrentUserReservation ? '#2980b9' : '#c0392b',
+            textColor: '#ffffff',
             userId: reservation.user_id,
-            editable: isCurrentUserReservation
+            userName: reservation.user_name,
+            editable: isCurrentUserReservation,
+            classNames: isCurrentUserReservation ? ['current-user-event'] : ['other-user-event']
           };
         });
 
@@ -156,15 +159,62 @@ class CalendarManager {
 
   // Personnaliser l'affichage des événements
   customEventContent(info) {
+    const event = info.event;
+    const isCurrentUserReservation = event.extendedProps.userId === window.authManager.getUser().id;
+    const userName = event.extendedProps.userName || event.title.replace('Réservé par: ', '');
+
+    // Container principal
+    const container = document.createElement('div');
+    container.className = 'fc-event-content-container';
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.width = '100%';
+
+    // En-tête avec icône utilisateur et nom
+    const header = document.createElement('div');
+    header.className = 'fc-event-header';
+    header.style.display = 'flex';
+    header.style.alignItems = 'center';
+    header.style.marginBottom = '2px';
+    header.style.fontWeight = 'bold';
+
+    // Icône utilisateur
+    const userIcon = document.createElement('span');
+    userIcon.innerHTML = isCurrentUserReservation
+      ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
+      : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>';
+    userIcon.style.marginRight = '5px';
+
+    // Nom d'utilisateur
+    const userNameEl = document.createElement('span');
+    userNameEl.textContent = isCurrentUserReservation ? 'Ma réservation' : userName;
+
+    header.appendChild(userIcon);
+    header.appendChild(userNameEl);
+
+    // Info de temps
     const timeText = document.createElement('div');
     timeText.innerHTML = `${this.formatTime(info.event.start)} - ${this.formatTime(info.event.end)}`;
     timeText.className = 'fc-event-time';
 
-    const titleEl = document.createElement('div');
-    titleEl.innerHTML = info.event.title;
-    titleEl.className = 'fc-event-title';
+    // Ajout des éléments au container
+    container.appendChild(header);
+    container.appendChild(timeText);
 
-    return { domNodes: [timeText, titleEl] };
+    // Ajouter une note si elle existe
+    if (event.extendedProps.description) {
+      const noteEl = document.createElement('div');
+      noteEl.className = 'fc-event-description';
+      noteEl.textContent = event.extendedProps.description;
+      noteEl.style.fontSize = '0.9em';
+      noteEl.style.fontStyle = 'italic';
+      noteEl.style.overflow = 'hidden';
+      noteEl.style.textOverflow = 'ellipsis';
+      noteEl.style.whiteSpace = 'nowrap';
+      container.appendChild(noteEl);
+    }
+
+    return { domNodes: [container] };
   }
 
   // Supprimer une réservation
