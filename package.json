@@ -1,0 +1,32 @@
+{
+  "name": "park",
+  "version": "1.0.0",
+  "description": "Une application web simple pour gérer la réservation d'un espace unique. Cette application permet de voir qui occupe actuellement l'espace et jusqu'à quand, ainsi que de réserver l'espace pour une période définie.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Groinkb/Park.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Groinkb/Park/issues"
+  },
+  "homepage": "https://github.com/Groinkb/Park#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

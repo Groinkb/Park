@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Réservation d'Espace</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Ajout de FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/fr.js"></script>
 </head>
 
 <body>
@@ -68,12 +72,19 @@
       </div>
 
       <div class="tabs">
-        <div class="tab active" data-tab="newReservation">Nouvelle réservation</div>
+        <div class="tab active" data-tab="calendarView">Calendrier</div>
+        <div class="tab" data-tab="newReservation">Nouvelle réservation</div>
         <div class="tab" data-tab="upcomingReservations">Réservations à venir</div>
         <div class="tab" data-tab="pastReservations">Historique</div>
       </div>
 
-      <div id="newReservation" class="tab-content active">
+      <div id="calendarView" class="tab-content active">
+        <div class="calendar-container">
+          <div id="calendar"></div>
+        </div>
+      </div>
+
+      <div id="newReservation" class="tab-content">
         <div class="reservation-form">
           <h2>Ajouter une réservation</h2>
           <form id="reservationForm">
@@ -118,6 +129,7 @@
   <!-- Chargement des scripts JavaScript -->
   <script src="js/auth.js"></script>
   <script src="js/reservation.js"></script>
+  <script src="js/calendar.js"></script>
   <script src="js/app.js"></script>
 </body>
 

@@ -182,3 +182,76 @@ button:hover {
   color: #7f8c8d;
   margin-top: 5px;
 }
+
+/* NOUVEAUX STYLES POUR LE CALENDRIER */
+/* Styles pour le calendrier */
+.calendar-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#calendar {
+  margin-top: 10px;
+}
+
+/* Personnalisation des événements du calendrier */
+.fc-event {
+  border-radius: 3px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.fc-event-time,
+.fc-event-title {
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fc-toolbar-title {
+  text-transform: capitalize;
+}
+
+/* Rendre le calendrier responsive */
+@media (max-width: 768px) {
+  .fc-header-toolbar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fc-toolbar-chunk {
+    margin-bottom: 10px;
+  }
+
+  .fc-view-harness {
+    height: 500px !important;
+  }
+}
+
+/* Style pour l'indicateur d'aujourd'hui */
+.fc-day-today {
+  background-color: rgba(52, 152, 219, 0.1) !important;
+}
+
+/* Style pour le hover sur les événements */
+.fc-event:hover {
+  opacity: 0.85;
+}
+
+/* Personnalisation des boutons du calendrier */
+.fc-button-primary {
+  background-color: #3498db !important;
+  border-color: #2980b9 !important;
+}
+
+.fc-button-primary:hover {
+  background-color: #2980b9 !important;
+}
+
+.fc-button-active {
+  background-color: #2980b9 !important;
+}
