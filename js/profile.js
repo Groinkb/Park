@@ -16,6 +16,10 @@ class ProfileManager {
     this.profileEmail = document.getElementById('profileEmail');
     this.avatarInitials = document.getElementById('avatarInitials');
 
+    // Élément d'upload d'avatar
+    this.avatarUpload = document.getElementById('avatarUpload');
+    this.avatarImage = document.getElementById('avatarImage');
+
     // Champs de formulaire
     this.nameInput = document.getElementById('profileNameInput');
     this.phoneInput = document.getElementById('profilePhoneInput');
@@ -60,6 +64,13 @@ class ProfileManager {
         }
       });
     });
+
+    // Gestion de l'upload d'avatar
+    if (this.avatarUpload) {
+      this.avatarUpload.addEventListener('change', (e) => {
+        this.uploadAvatar(e.target.files[0]);
+      });
+    }
 
     // Formulaire d'informations de profil
     if (this.profileInfoForm) {
@@ -128,20 +139,30 @@ class ProfileManager {
     if (this.bioInput) this.bioInput.value = this.profileData.bio || '';
     if (this.themeSelector) this.themeSelector.value = this.profileData.theme || 'light';
 
-    // Afficher les initiales
-    if (this.avatarInitials && this.profileData.name) {
-      const nameParts = this.profileData.name.split(' ');
-      let initials = '';
+    // Afficher l'avatar s'il existe
+    if (this.avatarImage && this.profileData.avatar) {
+      this.avatarImage.src = this.profileData.avatar;
+      this.avatarImage.style.display = 'block';
+      if (this.avatarInitials) this.avatarInitials.style.display = 'none';
+    } else if (this.avatarInitials) {
+      this.avatarInitials.style.display = 'block';
+      if (this.avatarImage) this.avatarImage.style.display = 'none';
 
-      if (nameParts.length >= 2) {
-        initials = nameParts[0].charAt(0) + nameParts[1].charAt(0);
-      } else if (nameParts.length === 1) {
-        initials = nameParts[0].charAt(0);
-      } else {
-        initials = 'U';
+      // Afficher les initiales
+      if (this.profileData.name) {
+        const nameParts = this.profileData.name.split(' ');
+        let initials = '';
+
+        if (nameParts.length >= 2) {
+          initials = nameParts[0].charAt(0) + nameParts[1].charAt(0);
+        } else if (nameParts.length === 1) {
+          initials = nameParts[0].charAt(0);
+        } else {
+          initials = 'U';
+        }
+
+        this.avatarInitials.textContent = initials.toUpperCase();
       }
-
-      this.avatarInitials.textContent = initials.toUpperCase();
     }
 
     // Appliquer le thème si défini
@@ -197,6 +218,82 @@ class ProfileManager {
       console.error('Erreur:', error);
       this.profileInfoError.textContent = 'Erreur de connexion au serveur';
       this.profileInfoError.style.display = 'block';
+    }
+  }
+
+  // Fonction pour télécharger l'avatar
+  async uploadAvatar(file) {
+    if (!file || !window.authManager.isAuthenticated()) {
+      return;
+    }
+
+    // Vérifier si le fichier est une image
+    if (!file.type.startsWith('image/')) {
+      alert('Veuillez sélectionner un fichier image');
+      return;
+    }
+
+    // Créer un objet FormData
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    try {
+      // Afficher une prévisualisation
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (this.avatarImage) {
+          this.avatarImage.src = e.target.result;
+          this.avatarImage.style.display = 'block';
+        }
+        if (this.avatarInitials) {
+          this.avatarInitials.style.display = 'none';
+        }
+      };
+      reader.readAsDataURL(file);
+
+      // Envoyer le fichier au serveur
+      const response = await fetch('/api/profile/avatar', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${window.authManager.getToken()}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Erreur lors du téléchargement de l\'avatar');
+      }
+
+      const data = await response.json();
+
+      // Mettre à jour l'avatar dans les données du profil
+      if (this.profileData) {
+        this.profileData.avatar = data.avatar;
+      }
+
+      // Rafraîchir l'affichage si nécessaire
+      this.displayProfile();
+
+    } catch (error) {
+      console.error('Erreur:', error);
+      alert(`Erreur lors du téléchargement de l'avatar: ${error.message}`);
+
+      // Réinitialiser si échec
+      if (this.profileData && this.profileData.avatar) {
+        if (this.avatarImage) {
+          this.avatarImage.src = this.profileData.avatar;
+          this.avatarImage.style.display = 'block';
+        }
+      } else {
+        if (this.avatarImage) this.avatarImage.style.display = 'none';
+        if (this.avatarInitials) this.avatarInitials.style.display = 'block';
+      }
+    }
+
+    // Réinitialiser l'input file
+    if (this.avatarUpload) {
+      this.avatarUpload.value = '';
     }
   }
 
