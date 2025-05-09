@@ -1,130 +1,281 @@
-<div id="userProfile" class="tab-content">
-  <h2>Mon Profil</h2>
+<!DOCTYPE html> 
+<html lang="fr">
 
-  <div class="profile-container">
-    <div class="profile-header">
-      <div class="profile-avatar">
-        <div class="avatar-container">
-          <div class="avatar-circle" id="avatarPreview">
-            <img id="avatarImage" style="display: none;" alt="Photo de profil">
-            <span id="avatarInitials">JD</span>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réservation d'Espace</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <!-- Ajout de FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/fr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Réservation d'Espace</h1>
+
+    <!-- Zone de connexion/inscription -->
+    <div id="authSection">
+      <div id="loginForm" class="auth-form">
+        <h2>Connexion</h2>
+        <form id="loginFormElement">
+          <div class="form-group">
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" required>
           </div>
-          <div class="avatar-upload">
-            <label for="avatarUpload" class="avatar-upload-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                <circle cx="12" cy="13" r="4"></circle>
-              </svg>
-              Changer
-            </label>
-            <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+          <div class="form-group">
+            <label for="loginPassword">Mot de passe:</label>
+            <input type="password" id="loginPassword" required>
+
+
+
+
+
+
+
+          </div>
+          <div id="loginError" class="error"></div>
+          <button type="submit">Se connecter</button>
+        </form>
+        <p>Pas encore de compte? <a href="#" id="showRegister">S'inscrire</a></p>
+      </div>
+
+      <div id="registerForm" class="auth-form" style="display: none;">
+        <h2>Inscription</h2>
+        <form id="registerFormElement">
+          <div class="form-group">
+            <label for="registerName">Nom:</label>
+            <input type="text" id="registerName" required>
+          </div>
+          <div class="form-group">
+            <label for="registerEmail">Email:</label>
+            <input type="email" id="registerEmail" required>
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Mot de passe:</label>
+            <input type="password" id="registerPassword" required>
+          </div>
+          <div id="registerError" class="error"></div>
+          <button type="submit">S'inscrire</button>
+        </form>
+        <p>Déjà un compte? <a href="#" id="showLogin">Se connecter</a></p>
+      </div>
+    </div>
+
+    <!-- Section principale de l'application (visible après connexion) -->
+    <div id="appSection" style="display: none;">
+      <div class="user-info">
+        <span id="userDisplayName"></span>
+        <button id="logoutButton">Déconnexion</button>
+      </div>
+
+      <div class="current-status" id="currentStatus">
+        <h2>Statut Actuel</h2>
+        <div id="statusMessage" class="status-free">L'espace est libre</div>
+        <div id="occupiedBy" style="display: none;"></div>
+        <div id="untilTime" style="display: none;"></div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="calendarView">Calendrier</div>
+        <div class="tab" data-tab="newReservation">Nouvelle réservation</div>
+        <div class="tab" data-tab="upcomingReservations">Réservations à venir</div>
+        <div class="tab" data-tab="pastReservations">Historique</div>
+        <div class="tab" data-tab="userProfile">Mon Profil</div>
+      </div>
+
+      <div id="calendarView" class="tab-content active">
+        <div class="calendar-container">
+          <div id="calendar"></div>
+
+
+        </div>
+      </div>
+
+      <div id="newReservation" class="tab-content">
+        <div class="reservation-form">
+          <h2>Ajouter une réservation</h2>
+          <form id="reservationForm">
+            <div class="form-group">
+              <label for="startTime">Date et heure de début:</label>
+              <input type="datetime-local" id="startTime" required>
+            </div>
+            <div class="form-group">
+              <label for="endTime">Date et heure de fin:</label>
+              <input type="datetime-local" id="endTime" required>
+            </div>
+            <div class="form-group">
+              <label for="reservationNote">Note (optionnel):</label>
+              <textarea id="reservationNote"></textarea>
+            </div>
+            <div id="formError" class="error"></div>
+            <button type="submit">Réserver</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="upcomingReservations" class="tab-content">
+        <div class="calendar">
+          <h2>Réservations à venir</h2>
+          <ul class="reservation-list" id="upcomingList">
+            <!-- Les réservations futures seront ajoutées ici via JavaScript -->
+          </ul>
+        </div>
+      </div>
+
+      <div id="pastReservations" class="tab-content">
+        <div class="calendar">
+          <h2>Historique des réservations</h2>
+          <ul class="reservation-list" id="pastList">
+            <!-- Les réservations passées seront ajoutées ici via JavaScript -->
+          </ul>
+        </div>
+      </div>
+
+      <div id="userProfile" class="tab-content">
+        <h2>Mon Profil</h2>
+
+        <div class="profile-container">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <div class="avatar-circle" id="avatarPreview">
+                <span id="avatarInitials">JD</span>
+              </div>
+            </div>
+            <div class="profile-info">
+              <h3 id="profileName">Nom Complet</h3>
+              <p id="profileEmail">email@example.com</p>
+            </div>
+          </div>
+
+          <div class="profile-tabs">
+            <div class="profile-tab active" data-profile-tab="info">Informations</div>
+            <div class="profile-tab" data-profile-tab="security">Sécurité</div>
+            <div class="profile-tab" data-profile-tab="preferences">Préférences</div>
+            <div class="profile-tab" data-profile-tab="stats">Statistiques</div>
+          </div>
+
+          <div class="profile-tab-content" id="infoTab">
+            <form id="profileInfoForm">
+              <div class="form-group">
+                <label for="profileNameInput">Nom complet</label>
+                <input type="text" id="profileNameInput" placeholder="Votre nom complet">
+              </div>
+
+              <div class="form-group">
+                <label for="profilePhoneInput">Téléphone</label>
+                <input type="tel" id="profilePhoneInput" placeholder="Votre numéro de téléphone">
+              </div>
+
+              <div class="form-group">
+                <label for="profileDepartmentInput">Département</label>
+                <input type="text" id="profileDepartmentInput" placeholder="Votre département">
+              </div>
+
+              <div class="form-group">
+                <label for="profilePositionInput">Poste</label>
+                <input type="text" id="profilePositionInput" placeholder="Votre poste">
+              </div>
+
+              <div class="form-group">
+                <label for="profileBioInput">Bio</label>
+                <textarea id="profileBioInput" placeholder="Quelques mots sur vous" rows="4"></textarea>
+              </div>
+
+              <div id="profileInfoError" class="error" style="display: none;"></div>
+              <button type="submit">Enregistrer les modifications</button>
+            </form>
+          </div>
+
+          <div class="profile-tab-content" id="securityTab" style="display: none;">
+            <form id="passwordChangeForm">
+              <div class="form-group">
+                <label for="currentPassword">Mot de passe actuel</label>
+                <input type="password" id="currentPassword" required>
+              </div>
+
+              <div class="form-group">
+                <label for="newPassword">Nouveau mot de passe</label>
+                <input type="password" id="newPassword" required>
+              </div>
+
+
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirmer le mot de passe</label>
+                <input type="password" id="confirmPassword" required>
+              </div>
+
+              <div id="passwordChangeError" class="error" style="display: none;"></div>
+              <button type="submit">Changer le mot de passe</button>
+            </form>
+          </div>
+
+          <div class="profile-tab-content" id="preferencesTab" style="display: none;">
+            <div class="form-group">
+              <label for="themeSelector">Thème de l'application</label>
+              <select id="themeSelector">
+                <option value="light">Clair</option>
+                <option value="dark">Sombre</option>
+                <option value="system">Système</option>
+              </select>
+            </div>
+
+            <div id="themeError" class="error" style="display: none;"></div>
+            <button id="savePreferencesBtn">Enregistrer les préférences</button>
+          </div>
+
+
+
+
+
+
+
+          <div class="profile-tab-content" id="statsTab" style="display: none;">
+            <div class="stats-container">
+              <div class="stat-card">
+                <div class="stat-value" id="totalReservations">0</div>
+                <div class="stat-label">Réservations totales</div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-value" id="hoursReserved">0</div>
+                <div class="stat-label">Heures réservées</div>
+              </div>
+
+
+
+              <div class="stat-card">
+                <div class="stat-value" id="upcomingReservations">0</div>
+                <div class="stat-label">Réservations à venir</div>
+              </div>
+            </div>
+
+            <div class="stats-chart-container">
+              <h4>Vos réservations par mois</h4>
+              <canvas id="reservationsChart"></canvas>
+            </div>
           </div>
         </div>
       </div>
-      <div class="profile-info">
-        <h3 id="profileName">Nom Complet</h3>
-        <p id="profileEmail">email@example.com</p>
-      </div>
-    </div>
 
-    <div class="profile-tabs">
-      <div class="profile-tab active" data-profile-tab="info">Informations</div>
-      <div class="profile-tab" data-profile-tab="security">Sécurité</div>
-      <div class="profile-tab" data-profile-tab="preferences">Préférences</div>
-      <div class="profile-tab" data-profile-tab="stats">Statistiques</div>
-    </div>
 
-    <div class="profile-tab-content" id="infoTab">
-      <form id="profileInfoForm">
-        <div class="form-group">
-          <label for="profileNameInput">Nom complet</label>
-          <input type="text" id="profileNameInput" placeholder="Votre nom complet">
-        </div>
 
-        <div class="form-group">
-          <label for="profilePhoneInput">Téléphone</label>
-          <input type="tel" id="profilePhoneInput" placeholder="Votre numéro de téléphone">
-        </div>
 
-        <div class="form-group">
-          <label for="profileDepartmentInput">Département</label>
-          <input type="text" id="profileDepartmentInput" placeholder="Votre département">
-        </div>
 
-        <div class="form-group">
-          <label for="profilePositionInput">Poste</label>
-          <input type="text" id="profilePositionInput" placeholder="Votre poste">
-        </div>
-
-        <div class="form-group">
-          <label for="profileBioInput">Bio</label>
-          <textarea id="profileBioInput" placeholder="Quelques mots sur vous" rows="4"></textarea>
-        </div>
-
-        <div id="profileInfoError" class="error" style="display: none;"></div>
-        <button type="submit">Enregistrer les modifications</button>
-      </form>
-    </div>
-
-    <div class="profile-tab-content" id="securityTab" style="display: none;">
-      <form id="passwordChangeForm">
-        <div class="form-group">
-          <label for="currentPassword">Mot de passe actuel</label>
-          <input type="password" id="currentPassword" required>
-        </div>
-
-        <div class="form-group">
-          <label for="newPassword">Nouveau mot de passe</label>
-          <input type="password" id="newPassword" required>
-        </div>
-
-        <div class="form-group">
-          <label for="confirmPassword">Confirmer le mot de passe</label>
-          <input type="password" id="confirmPassword" required>
-        </div>
-
-        <div id="passwordChangeError" class="error" style="display: none;"></div>
-        <button type="submit">Changer le mot de passe</button>
-      </form>
-    </div>
-
-    <div class="profile-tab-content" id="preferencesTab" style="display: none;">
-      <div class="form-group">
-        <label for="themeSelector">Thème de l'application</label>
-        <select id="themeSelector">
-          <option value="light">Clair</option>
-          <option value="dark">Sombre</option>
-          <option value="system">Système</option>
-        </select>
-      </div>
-
-      <div id="themeError" class="error" style="display: none;"></div>
-      <button id="savePreferencesBtn">Enregistrer les préférences</button>
-    </div>
-
-    <div class="profile-tab-content" id="statsTab" style="display: none;">
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-value" id="totalReservations">0</div>
-          <div class="stat-label">Réservations totales</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-value" id="hoursReserved">0</div>
-          <div class="stat-label">Heures réservées</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-value" id="upcomingReservations">0</div>
-          <div class="stat-label">Réservations à venir</div>
-        </div>
-      </div>
-
-      <div class="stats-chart-container">
-        <h4>Vos réservations par mois</h4>
-        <canvas id="reservationsChart"></canvas>
-      </div>
     </div>
   </div>
-</div>
+
+  <!-- Chargement des scripts JavaScript -->
+  <script src="js/auth.js"></script>
+  <script src="js/reservation.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
