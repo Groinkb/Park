@@ -301,3 +301,185 @@ button:hover {
   color: #333 !important;
   font-weight: normal;
 }
+
+
+/* MISE EN VALEUR DU FORMULAIRE DE RÉSERVATION */
+.reservation-form-container {
+  background-color: #ffffff;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  margin-top: 20px;
+}
+
+/* CHAMPS DE FORMULAIRES MIEUX VISIBLES */
+input[type="datetime-local"],
+input[type="text"],
+textarea {
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* MESSAGE DE CONFIRMATION OU D'ERREUR */
+.feedback-message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.feedback-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d0e9c6;
+}
+
+.feedback-error {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+}
+
+/* BOUTON DÉCONNEXION ADOUCI */
+#logoutButton {
+  background-color: #e74c3c;
+  transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+  background-color: #c0392b;
+}
+
+
+/* MISE EN VALEUR DU FORMULAIRE DE RÉSERVATION */
+.reservation-form-container {
+  background-color: #ffffff;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  margin-top: 20px;
+}
+
+/* CHAMPS DE FORMULAIRES MIEUX VISIBLES */
+input[type="datetime-local"],
+input[type="text"],
+textarea {
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* MESSAGE DE CONFIRMATION OU D'ERREUR */
+.feedback-message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.feedback-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d0e9c6;
+}
+
+.feedback-error {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+}
+
+/* BOUTON DÉCONNEXION ADOUCI */
+#logoutButton {
+  background-color: #e74c3c;
+  transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+  background-color: #c0392b;
+}
+
+
+/* MISE EN VALEUR DU FORMULAIRE DE RÉSERVATION */
+.reservation-form-container {
+  background-color: #ffffff;
+  border: 2px solid #202c35;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  margin-top: 20px;
+}
+
+/* CHAMPS DE FORMULAIRES MIEUX VISIBLES */
+input[type="datetime-local"],
+input[type="text"],
+textarea {
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* MESSAGE DE CONFIRMATION OU D'ERREUR */
+.feedback-message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.feedback-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d0e9c6;
+}
+
+.feedback-error {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+}
+
+/* BOUTON DÉCONNEXION ADOUCI */
+#logoutButton {
+  background-color: #e74c3c;
+  transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+  background-color: #c0392b;
+}
+
+.reservation-form-container {
+  background-color: #ffffff;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  margin-top: 20px;
+}
+
+/* autres styles comme plus haut */
