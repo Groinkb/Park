@@ -1,0 +1,240 @@
+/* Styles pour la page de profil utilisateur */
+
+/* Conteneur principal */
+.profile-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* En-tête du profil */
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profile-avatar {
+  margin-right: 20px;
+}
+
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #3498db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.profile-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 22px;
+  color: #2c3e50;
+}
+
+.profile-info p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Onglets du profil */
+.profile-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.profile-tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  color: #7f8c8d;
+  transition: all 0.3s ease;
+}
+
+.profile-tab:hover {
+  color: #3498db;
+}
+
+.profile-tab.active {
+  color: #3498db;
+  border-bottom-color: #3498db;
+  font-weight: bold;
+}
+
+/* Contenu des onglets */
+.profile-tab-content {
+  margin-top: 20px;
+}
+
+/* Formulaires */
+.profile-tab-content form {
+  max-width: 600px;
+}
+
+/* Statistiques */
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  flex: 0 0 calc(33.333% - 20px);
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3498db;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.stats-chart-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stats-chart-container h4 {
+  margin-top: 0;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+canvas#reservationsChart {
+  width: 100%;
+  height: 300px;
+}
+
+/* Styles pour les thèmes */
+/* Thème clair (par défaut) */
+body.theme-light {
+  --bg-color: #f5f5f5;
+  --text-color: #333;
+  --card-bg: #fff;
+  --border-color: #ddd;
+  --primary-color: #3498db;
+  --accent-color: #e74c3c;
+  --muted-text: #7f8c8d;
+}
+
+/* Thème sombre */
+body.theme-dark {
+  --bg-color: #1a1a1a;
+  --text-color: #f5f5f5;
+  --card-bg: #2c2c2c;
+  --border-color: #444;
+  --primary-color: #3498db;
+  --accent-color: #e74c3c;
+  --muted-text: #aaa;
+
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+body.theme-dark .container {
+  color: var(--text-color);
+}
+
+body.theme-dark h1,
+body.theme-dark h2,
+body.theme-dark h3 {
+  color: var(--text-color);
+}
+
+body.theme-dark .auth-form,
+body.theme-dark .current-status,
+body.theme-dark .tab-content,
+body.theme-dark .profile-container,
+body.theme-dark .calendar-container {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body.theme-dark .profile-info p,
+body.theme-dark .stat-label {
+  color: var(--muted-text);
+}
+
+body.theme-dark .tab {
+  background-color: #444;
+  color: var(--text-color);
+}
+
+body.theme-dark .tab.active {
+  background-color: var(--card-bg);
+  color: var(--primary-color);
+}
+
+body.theme-dark input,
+body.theme-dark textarea,
+body.theme-dark select {
+  background-color: #3a3a3a;
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body.theme-dark .profile-tab {
+  color: var(--muted-text);
+}
+
+body.theme-dark .profile-tab.active {
+  color: var(--primary-color);
+}
+
+body.theme-dark .stat-card,
+body.theme-dark .stats-chart-container {
+  background-color: #3a3a3a;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-avatar {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .stats-container {
+    flex-direction: column;
+  }
+
+  .stat-card {
+    flex: 0 0 100%;
+  }
+
+  .profile-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 5px;
+  }
+}
